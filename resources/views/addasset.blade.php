@@ -44,12 +44,10 @@ Open a Box
                          </div> 
                          
                     <div>
-                    
-
+                        
                     <div class="input-group input-group-outline mb-3" id="hide">
                       <input  type="hidden" class="form-control" name="user" value="{{ $user['name'] }}">
                     </div>
-
                     </form>
                 </div>
                 <div class="modal-footer">
