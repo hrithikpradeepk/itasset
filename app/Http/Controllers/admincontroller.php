@@ -9,6 +9,9 @@ use App\Models\asset;
 use App\Models\location;
 use App\Models\manufacturer;
 use App\Models\vendor;
+use App\Models\box;
+use App\Models\login;
+use DB; 
 
 class admincontroller extends Controller
 {
@@ -66,6 +69,32 @@ class admincontroller extends Controller
     }
 
 
+    public function storevendor(Request $request)
+    {
+        
+        $name=request("name");
+        
+        $this->validate($request,[
+            'name'=>'required',
+        ]);
+
+
+        $vendor = new vendor();
+
+        $vendor->vendor_name=$name;
+        
+
+        $vendor->save();
+        echo "<script>alert('Successfully Added Vendor');window.location='/addvendor';</script>";
+    }
+
+
+    public function viewvendor()
+    {
+        $vendor=vendor::all();
+
+        return view('viewvendor',compact('vendor'));
+    }
 
     public function storeman(Request $request)
     {
@@ -86,6 +115,22 @@ class admincontroller extends Controller
         echo "<script>alert('Successfully Added Manufacturer');window.location='/addmanufacturer';</script>";
     }
 
+    public function storebox(Request $request)
+    {
+        
+        $num=request("box_num");
+        $vendor=request("vendor");
+       
+        $box = new box();
+        
+        $box->box_num=$num;
+        $box->vendor=$vendor;
+
+        $box->save();
+        echo "<script>alert('Successfully Added box');window.location='/openbox';</script>";
+    }
+
+
     public function viewman()
     {
         $manufacturer=manufacturer::all();
@@ -100,6 +145,14 @@ class admincontroller extends Controller
 
         return view('viewmanufacturer',compact('manufacturer'));
     }
+
+    public function viewvend()
+    {
+        $vendor=vendor::all();
+
+        return view('viewvendor',compact('vendor'));
+    }
+
 
     public function viewlocation()
     {  
@@ -127,6 +180,12 @@ class admincontroller extends Controller
     {
         $manufacturer=manufacturer::find($id);
         return view('editmanufacturer',compact('manufacturer'));
+    }
+
+    public function editvendor($id)
+    {
+        $vendor=vendor::find($id);
+        return view('editvendor',compact('vendor'));
     }
 
     public function editlocation($id)
@@ -158,6 +217,22 @@ class admincontroller extends Controller
         echo "<script>alert('Succesfully edited......');window.location='/viewmanufacturer';</script>"; 
        
     }
+
+    public function updatevendor(Request $request, $id)
+    {
+        $vendor=vendor::find($id); 
+
+        $name=request("name");
+        
+        $vendor->vendor_name=$name;
+    
+        
+        $vendor->save();
+        echo "<script>alert('Succesfully edited......');window.location='/viewvendor';</script>"; 
+       
+    }
+
+
 
 
     public function updatelocation(Request $request, $id)
@@ -217,25 +292,33 @@ class admincontroller extends Controller
     }
 
 
-    public function viewbox()
+
+
+    public function view()
     {
-        $box=new asset();
+        $vendor=vendor::all();
+
+        $box=box::all();
+      
+        $sl_num = DB::table('boxes')->latest('sl_num')->first();
+        
         $year = Carbon::now()->year;
         $month = Carbon::now()->month;
 
         if(strlen($month)==1)
             $month="0".$month;
 
-        $sl_num=00;
-        ++$sl_num;
 
+            
         if(strlen($sl_num)==1)
             $sl_num="0".$sl_num;
 
         $date = Carbon::now()->day;
-        $box=$box->box_num="B".$year.$month.$date.$sl_num;
-        return view('addasset',compact('box'));
+        $box->box_num="B".$year.$month.$date.$sl_num;
+
         
+        $user=login::where('staff_id','=', session('sid'))->first();
+        return view('openbox',compact('vendor','box'));
     }
 
 
@@ -353,6 +436,14 @@ class admincontroller extends Controller
         $manufacturer=manufacturer::find($id);
         $manufacturer->delete();
         echo "<script>alert('Succesfully deleted......');window.location='/viewmanufacturer';</script>"; 
+        
+    }
+
+    public function deletevendor($id)
+    {
+        $vendor=vendor::find($id);
+        $vendor->delete();
+        echo "<script>alert('Succesfully deleted......');window.location='/viewvendor';</script>"; 
         
     }
 

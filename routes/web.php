@@ -28,8 +28,8 @@ Route::get('/register', function () {
     return view('register');
 });
 
-Route::get('/addasset', function () {
-    return view('addasset');
+Route::get('/openbox', function () {
+    return view('openbox');
 });
 
 Route::get('/addcategory', function () {
@@ -40,23 +40,38 @@ Route::get('/addmanufacturer', function () {
     return view('addmanufacturer');
 });
 
+Route::get('/addvendor', function () {
+    return view('addvendor');
+});
+
 Route::get('/viewmanufacturer', function () {
     return view('viewmanufacturer');
+});
+
+Route::get('/viewvendor', function () {
+    return view('viewvendor');
 });
 
 Route::post('/addcategory1',[admincontroller::class,'storecat']);
 
 Route::post('/addmanufacturer1',[admincontroller::class,'storeman']);
 
+Route::post('/addvendor1',[admincontroller::class,'storevendor']);
+
 Route::POST ('/viewcategory1',[admincontroller::class,'viewcat']);
 
 Route::POST ('/viewmanufacturer1',[admincontroller::class,'viewman']);
+
+Route::POST ('/viewvendor1',[admincontroller::class,'viewvendor']);
 
 Route::get('/editcategory/{id}', [admincontroller::class,'editcat']);
 Route::post('/editcat/{id}', [admincontroller::class,'updatecat']);
 
 Route::get('/editmanufacturer/{id}', [admincontroller::class,'editmanu']);
 Route::post('/editmanufacturer/{id}', [admincontroller::class,'updatemanu']);
+
+Route::get('/editvendor/{id}', [admincontroller::class,'editvendor']);
+Route::post('/editvendor/{id}', [admincontroller::class,'updatevendor']);
 
 Route::get('/transfer', function () {
     return view('transfer');
@@ -81,9 +96,7 @@ Route::get('/viewcategory', function () {
     return view('viewcategory');
 });
 
-Route::get('/addassets', function () {
-    return view('addasasets');
-});
+
 
 Route::get('/editcategory', function () {
     return view('editcategory');
@@ -143,11 +156,11 @@ Route::get('/sessiondelete',function(){
 
 Route::POST ('/viewlocation1',[admincontroller::class,'viewlocation']);
 
-Route::post('/addassets1',[admincontroller::class,'store1']);
-Route::get('/addasset',[registercontroller::class,'view']);
+Route::post('/openbox1',[admincontroller::class,'store1']);
+Route::get('/openbox',[admincontroller::class,'view']);
 
 
-Route::post('/addasset',[admincontroller::class,'viewbox']);
+Route::post('/openbox1',[admincontroller::class,'storebox']);
 
 
 Route::get('/transfer',[admincontroller::class,'viewcategory']);
@@ -168,6 +181,8 @@ Route::get('/viewcategory',[admincontroller::class,'viewcat']);
 
 Route::get('/viewmanufacturer',[admincontroller::class,'viewmanu']);
 
+Route::get('/viewvendor',[admincontroller::class,'viewvendor']);
+
 Route::get('/viewlocation',[admincontroller::class,'viewlocation']);
 
 Route::get('/deletecategory/{id}', [admincontroller::class,'deletecategory']);
@@ -176,11 +191,13 @@ Route::get('/deletelocation/{id}', [admincontroller::class,'deletelocation']);
 
 Route::get('/deletemanufacturer/{id}', [admincontroller::class,'deletemanufacturer']);
 
+Route::get('/deletevendor/{id}', [admincontroller::class,'deletevendor']);
+
 Route::get('/deleteasset/{id}', [admincontroller::class,'deleteasset']);
 
 Route::get('/viewasset',[admincontroller::class,'viewasset']);
 
-
+Route::post('/addbox1',[admincontroller::class,'storebox']);
 
 Route::post('/addlocation1',[admincontroller::class,'storeloc']);
 Route::get('/location',[admincontroller::class,'viewloc']);

@@ -32,22 +32,35 @@ Open a Box
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-danger" style="display:none"></div>
-                    <form class="image-upload" method="post" action="/openbox1 " enctype="multipart/form-data">
-                        @csrf
+                    <form class="row contact_form" method="post" action="/addbox1 " enctype="multipart/form-data">
+                    {{csrf_field()}}
                         <div class="input-group input-group-outline mb-3">
-                            <label class="form-label">Box Number</label>
-                            <input readonly type="text" class="form-control" name="box_num" value="">
+                      <label class="form-label">Box Number</label>
+                    </div>
+                        <div class="input-group input-group-outline mb-3">
+                           
+                            <input readonly type="text" class="form-control" name="box_num" value="{{$box->box_num}}">
                          </div> 
+
+                         <div class="input-group input-group-outline mb-3">
+                      <label class="form-label">Vendor</label>
+                    </div>
+
+                    <div class="input-group input-group-outline mb-3">
+                    <select name="vendor" id="vendor" class="form-control" >
+                        @foreach($vendor as $vendor)
+                        <option>{{$vendor->vendor_name }}</option>
+                        @endforeach 
+                        </select>
+                    </div>
+
                          <div style="margin-left:350px" class="input-group input-group-outline mb-3">
                             
-                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Add Asset</button>
+                         <button type="submit" value="addbox" class="btn btn-danger" >Add Asset</button>
                          </div> 
                          
                     <div>
-                        
-                    <div class="input-group input-group-outline mb-3" id="hide">
-                      <input  type="hidden" class="form-control" name="user" value="{{ $user['name'] }}">
-                    </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">

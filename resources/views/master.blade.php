@@ -19,8 +19,9 @@
         <div>
         <a href="/addmanufacturer">
         <button type="submit"  value="" style=" padding: 30px 56px;"class="btn bg-gradient-primary btn-lg  "> Manufacturers</button>
-            
-              <button type="submit"  value="" style="margin-left:250px; padding: 30px 56px;"class="btn bg-gradient-primary btn-lg  "> Vendors</button>
+
+        <a href="/addvendor">
+        <button type="submit"  value="" style="margin-left:250px; padding: 30px 56px;"class="btn bg-gradient-primary btn-lg  "> Vendors</button>
 
               
          </div>

@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\admincontroller;
 use App\Http\Controllers\registercontroller;
 use App\Models\login;
+use App\Models\asset;
 use App\Models\location;
 use App\Models\category;
+use App\Models\vendor;
+use App\Models\box;
 
 
 class registercontroller extends Controller
@@ -61,19 +65,6 @@ class registercontroller extends Controller
             echo "<script>alert('Passwords Doesnt match!');window.location='/register';</script>"; 
         }
        
-    }
-    
-    
-    public function view()
-    {
-        $category=category::all();
-        $floor=location::all();
-        $tower=location::all();
-        $department=location::all();
-        $windows=location::all();
-        $ms_office=location::all();
-        $user=login::where('staff_id','=', session('sid'))->first();
-        return view('addasset',compact('category','floor','tower','department','windows','ms_office','user'));
     }
 
 
