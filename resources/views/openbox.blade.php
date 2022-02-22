@@ -2,29 +2,56 @@
 
 @section('content')
 
-
+<div>
     <div class="container">
         <div class="col-md-8 offset-2 mt-5">
             <div class="card">
                 <div class="card-header bg-primary">
-                    <h5 class="text-white text-center">Assets</h5>
-                </div>
+                    <h5 class="text-white text-center">Boxes</h5>
+                    </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0" id="dataTable">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Box Id</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Box Number</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Vendor</th>
+                     
+                    </tr>
+                  </thead>
+                  <tbody>
+         @foreach($box as $box)
+         <tr>
+         <td> <h6 class="resume-title">{{$box->sl_num }}</h6></td>
+         <td> <h6 class="resume-title"><a href="/addasset?id={{$box->sl_num}}">{{$box->box_num }}</a></h6></td>
+         <td> <h6 class="resume-title">{{$box->vendor }}</h6></td>
+         
+         </tr>
+          @endforeach 
+</tbody>     
+</table>
+              
+            </div>
+  </div>
+  
                 <div class="card-body">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-Open a Box
+Add Box
 </button>
+
                 </div>
             </div>
         </div>
     </div>
     <!-- Button trigger modal -->
-
-    
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"   aria-label="Close" aria-hidden="true">
         <div class="modal-dialog modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Open a box - Add assets</h5>
+                    
+                    <h5 class="modal-title" id="exampleModalLabel">Add a New box - Add assets</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                    
                         <span aria-hidden="true">X</span>
@@ -39,7 +66,7 @@ Open a Box
                     </div>
                         <div class="input-group input-group-outline mb-3">
                            
-                            <input readonly type="text" class="form-control" name="box_num" value="{{$box->box_num}}">
+                            <input readonly type="text" class="form-control" name="box_num" value="{{$x}}">
                          </div> 
 
                          <div class="input-group input-group-outline mb-3">
@@ -54,22 +81,21 @@ Open a Box
                         </select>
                     </div>
 
-                         <div style="margin-left:350px" class="input-group input-group-outline mb-3">
-                            
-                         <button type="submit" value="addbox" class="btn btn-danger" >Add Asset</button>
-                         </div> 
+                         
                          
                     <div>
 
-                    </form>
+                   
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success" id="formSubmit">Save</button>
+                    
+                    <button type="submit" class="btn btn-success" id="formSubmit">Save</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
     <script>
         $(document).ready(function(){
             $('#formSubmit').click(function(e){
@@ -107,4 +133,3 @@ Open a Box
             });
         });
     </script>
-

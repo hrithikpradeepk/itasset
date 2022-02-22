@@ -159,6 +159,10 @@ Route::POST ('/viewlocation1',[admincontroller::class,'viewlocation']);
 Route::post('/openbox1',[admincontroller::class,'store1']);
 Route::get('/openbox',[admincontroller::class,'view']);
 
+Route::get('/addasset',[admincontroller::class,'indexAsset']);
+
+
+Route::post('/addasset1',[admincontroller::class,'storeasset']);
 
 Route::post('/openbox1',[admincontroller::class,'storebox']);
 
@@ -198,6 +202,7 @@ Route::get('/deleteasset/{id}', [admincontroller::class,'deleteasset']);
 Route::get('/viewasset',[admincontroller::class,'viewasset']);
 
 Route::post('/addbox1',[admincontroller::class,'storebox']);
+Route::post('/addbox',[admincontroller::class,'addbox']);
 
 Route::post('/addlocation1',[admincontroller::class,'storeloc']);
 Route::get('/location',[admincontroller::class,'viewloc']);

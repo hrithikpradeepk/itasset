@@ -115,6 +115,7 @@ class admincontroller extends Controller
         echo "<script>alert('Successfully Added Manufacturer');window.location='/addmanufacturer';</script>";
     }
 
+
     public function storebox(Request $request)
     {
         
@@ -159,20 +160,13 @@ class admincontroller extends Controller
         $location=location::all();
         return view('viewlocation',compact('location'));
     }
-
-    public function viewasset()
-    {
-        $asset=assetsmodel::all();
-        return view('viewasset',compact('asset'));
-    }
-
-    
+  
 
     public function transferasset()
     {
         $category=categorymodel::all();
         $categorycount=categorymodel::all()->count();
-        $asset=assetsmodel::all();
+        $asset=asset::all();
         return view('transfer',compact('category','categorycount','asset'));
     }
 
@@ -196,7 +190,7 @@ class admincontroller extends Controller
 
     public function editasset($id)
     {
-        $dataasset=assetsmodel::find($id);
+        $dataasset=asset::find($id);
         $category=categorymodel::all();
         $details=detailsmodel::all();
         return view('editasset',compact('dataasset','category','details'));
@@ -256,7 +250,7 @@ class admincontroller extends Controller
     public function updateasset(Request $request, $id)
     {
 
-        $asset=assetsmodel::find($id);
+        $asset=asset::find($id);
         
         $m_num=request("m_num");
         $sl_num=request("sl_num");
@@ -296,66 +290,89 @@ class admincontroller extends Controller
 
     public function view()
     {
-        $vendor=vendor::all();
+         $vendor=vendor::all();
 
-        $box=box::all();
+         $box=box::all();
       
         $sl_num = DB::table('boxes')->latest('sl_num')->first();
-        
-        $year = Carbon::now()->year;
-        $month = Carbon::now()->month;
+        //dd($sl_num);
+        if($sl_num ==NUll)
+             $newSl=1;
+        else    
+            $newSl = $sl_num->sl_num +1;
+         //dd($newSl);
+         $year = Carbon::now()->year;
+         $month = Carbon::now()->month;
 
-        if(strlen($month)==1)
-            $month="0".$month;
+         if(strlen($month)==1)
+             $month="0".$month;
 
 
             
-        if(strlen($sl_num)==1)
-            $sl_num="0".$sl_num;
+         if(strlen($newSl)==1)
+             $newSl="0".$newSl;
 
-        $date = Carbon::now()->day;
-        $box->box_num="B".$year.$month.$date.$sl_num;
-
+         $date = Carbon::now()->day;
+         $box->box_num="B".$year.$month.$date.$newSl;
+         //dd($box->box_num);
         
-        $user=login::where('staff_id','=', session('sid'))->first();
-        return view('openbox',compact('vendor','box'));
+        $x=$box->box_num;
+        return view('openbox',compact('box','vendor','x'));
     }
 
+    public function indexAsset(Request $request){
+        $id = $request->query('id');
+        //dd($id);
+        $category=category::all();
+        $location=location::all();
+        $manufacturer=manufacturer::all();
+        $vendor=box::where('sl_num',$id)->first();
+        $assets=asset::where('box_num',$id)->get();
+        $user=login::where('staff_id','=', session('sid'))->first();
+        
+        return view('assetView',compact('id','assets','category','location','manufacturer', 'vendor','user'));
+    }
 
-    public function store1(Request $request)
+   /* public function get()
     {
+        $category=category::all();
+        $location=location::all();
+        $manufacturer=manufacturer::all();
+        $vendor=vendor::all();
+        $user=login::where('staff_id','=', session('sid'))->first();
+
+        return view('assetView',compact('category', 'location', 'manufacturer','vendor','user'));
+    }*/
+
+    public function storeasset(Request $request)
+    {
+        $box_num=request("box_num");
+        $vendor=request("vendor");
         $m_num=request("m_num");
         $sl_num=request("sl_num");
         $category=request("category");
         $floor=request("floor");
         $tower=request("tower");
         $department=request("department");
-        $windows=request("windows");
-        $license=request("license");
-        $ms_office=request("ms_office");
-        $keyboard_ct=request("keyboard_ct");
-        $mouse_ct=request("mouse_ct");
+        $manufacturer=request("manufacturer");
         $user=request("user");
-        $userInfo = categorymodel::where('Categoryname','=', $category)->first();
 
-        $asset = new assetsmodel();
+        $asset = new asset();
 
-        $asset->category=$userInfo->Categoryname;
-
+        $asset->box_num=$box_num;
+        $asset->vendor=$vendor;
         $asset->model_num=$m_num;
-        $asset->sl_num=$sl_num;   
+        $asset->sl_num=$sl_num;  
+        $asset->category=$category;
+        $asset->manufacturer=$manufacturer; 
         $asset->floor=$floor;
         $asset->tower=$tower;   
         $asset->department=$department;
-        $asset->windows=$windows;   
-        $asset->license=$license;
-        $asset->ms_office=$ms_office;  
-        $asset->keyboard_ct=$keyboard_ct ;  
-        $asset->ms_office=$ms_office;   
+
         $asset->user=$user;
         
         $asset->save();
-        echo "<script>alert('Successfully Added asset');window.location='/dashboard';</script>";
+        echo "<script>alert('Successfully Added asset');window.location='/addasset?id=$box_num';</script>";
         
 
     }
@@ -378,37 +395,6 @@ class admincontroller extends Controller
         
 
     }
-
-
-
-
-
-    public function update1(Request $request, $id)
-    {
-        $bname=request("name");
-        $category=request("cat");
-        $bimage=$request->file('bimage');
-        $name=$bimage->getClientOriginalName();
-        $userInfo = categorymodel::where('Categoryname','=', $category)->first();
-        $bimage->move(public_path('assets/images'),$name);
-
-        $this->validate($request,[
-            'name'=>'required',
-        ]);
-
-        $brand = new brandmodel();
-
-        $brand->Brandname=$bname;
-        $brand->brandimage=$name;
-        $brand->categoryid=$userInfo->id;
-        
-        $brand->save();
-        echo "<script>alert('Succesfully edited......');window.location='/viewbrand';</script>"; 
-       
-    }
-
-
-
 
 
     public function viewloc()
@@ -456,7 +442,7 @@ class admincontroller extends Controller
     }
     public function deleteasset($id)
     {
-        $asset=assetsmodel::find($id);
+        $asset=asset::find($id);
         $asset->delete();
         echo "<script>alert('Succesfully deleted......');window.location='/viewasset';</script>"; 
         
