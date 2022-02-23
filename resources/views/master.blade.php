@@ -13,9 +13,11 @@
              <a href="/location">
             <button type="submit"  value="" style="margin-left:250px; padding: 30px 56px;"class="btn bg-gradient-primary btn-lg  "> Locations</button>
          </div>
-         
+         <a href="/viewasset">       
+         <button type="submit"  value="" style="margin-left:350px; margin-top:50px; padding: 30px 56px;"class="btn bg-gradient-primary btn-lg  "> Assets</button>
+
     </div>
-    <div  style="margin-left:390px; margin-top:200px" class="container">
+    <div  style="margin-left:390px; margin-top:80px" class="container">
         <div>
         <a href="/addmanufacturer">
         <button type="submit"  value="" style=" padding: 30px 56px;"class="btn bg-gradient-primary btn-lg  "> Manufacturers</button>

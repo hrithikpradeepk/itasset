@@ -16,7 +16,7 @@
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Asset Id</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Box Number</th>
+                      <!-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Box Number</th> -->
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">category</th>
                      
                     </tr>
@@ -26,7 +26,7 @@
          @foreach($assets as $a)
          <tr>
          <td> <h6 class="resume-title">{{$a->id }}</h6></td>
-         <td> <h6 class="resume-title"><a href="/addasset/{{$a->sl_num }}">{{$a->box_num }}</a></h6></td>
+         <!-- <td> <h6 class="resume-title"><a href="/addasset/{{$a->sl_num }}">{{$a->box_num }}</a></h6></td> -->
          <td> <h6 class="resume-title">{{$a->category }}</h6></td>
          
          </tr>

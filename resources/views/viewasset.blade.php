@@ -22,27 +22,39 @@
                 <h6 class="text-white text-capitalize ps-3">Assets</h6>
               </div>
             </div>
+
+            
+            <div class="col-md-5 "> 
+            <form type="get" action="\viewasset" class="search-container">
+              <table>
+              <tr>
+                <td><input style="margin-left:50px"  type="search"  class="form-control border-0 bg-light" name="asset" placeholder=" Enter serial number"></td>
+                 <td><button style="margin-left:110px" class="btn btn-primary my-2 my-sm-0" type="submit">Search</button></td>
+</tr>
+</table>
+            </form>
+            </div>
+
+
             <div class="card-body px-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0" id="dataTable">
                   <thead>
                     <tr>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Asset Id</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Box Number
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Vendor</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Model Number</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Serial Number</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Category</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Floor</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tower</th>
+                      <!-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Floor</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tower</th> -->
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Department</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Windows Version</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">License</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ms Office</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Keyboard CT</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Mouse CT</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Adaptor CT</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Transfer</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Edit</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Delete</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Transfer</th>
+                  
 
 
                       
@@ -51,29 +63,112 @@
                   <tbody>
          @foreach($asset as $asset)
          <tr>
+           <td><input type="checkbox" class="form-check"></td>
          <td> <h6 class="resume-title">{{$asset->id }}</h6></td>
+         <td> <h6 class="resume-title">{{$asset->box_num }}</h6></td>
+         <td> <h6 class="resume-title">{{$asset->vendor }}</h6></td>
          <td> <h6 class="resume-title">{{$asset->model_num }}</h6></td>
          <td> <h6 class="resume-title">{{$asset->sl_num }}</h6></td>
          <td> <h6 class="resume-title">{{$asset->category }}</h6></td>
-         <td> <h6 class="resume-title">{{$asset->floor }}</h6></td>
-         <td> <h6 class="resume-title">{{$asset->tower }}</h6></td>
+         <!-- <td> <h6 class="resume-title">{{$asset->floor }}</h6></td>
+         <td> <h6 class="resume-title">{{$asset->tower }}</h6></td> -->
          <td> <h6 class="resume-title">{{$asset->department }}</h6></td>
-         <td> <h6 style="margin-left:60px"class="resume-title">{{$asset->windows }}</h6></td>
-         <td> <h6 style="margin-left:20px"class="resume-title">{{$asset->license }}</h6></td>
-         <td> <h6 style="margin-left:30px"class="resume-title">{{$asset->ms_office }}</h6></td>
-         <td> <h6 class="resume-title">{{$asset->keyboard_ct }}</h6></td>
-         <td> <h6 class="resume-title">{{$asset->mouse_ct }}</h6></td>
-         <td> <h6 class="resume-title">{{$asset->adaptor_ct }}</h6></td>
-         <td> <a href={{"/editasset/".$asset->id}}><i style="margin-left:30px" class="material-icons">&#xE254;</i></a>
-      <td><a onclick="return confirm('Are you sure?')" href={{"/deleteasset/".$asset->id}}><i style="margin-left:30px" class="material-icons">&#xE872;</i></a></td>
-      <td> <a href={{"/transferasset/".$asset->id}}><i style="margin-left:30px" class="material-icons">&#xE254;</i></a>
+         <td> <button type="submit" data-bs-toggle="modal" data-bs-target="#transfermodal" style="padding: 8px 10px;"class="btn bg-gradient-primary btn-sm  "> Transfer </button></td>
+        
+        
          </tr>
+        
           @endforeach 
 </tbody>     
 </table>
+<button type="button"  style="margin-left:450px; padding: 8px 10px;"class="btn bg-gradient-primary btn-lg  "> Transfer </button>
               
             </div>
   </div>
+  <div class="modal fade" id="transfermodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"   aria-label="Close" aria-hidden="true">
+        <div class="modal-dialog modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    
+                    <h5 class="modal-title" id="exampleModalLabel">Transfer the asset</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                   
+                        <span aria-hidden="true">X</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" style="display:none"></div>
+                    <form class="row contact_form" method="post" action="/transfer1 " enctype="multipart/form-data">
+                    {{csrf_field()}}
+                        <div class="input-group input-group-outline mb-3">
+                      <label class="form-label">Select Department</label>
+                    </div>
+                        <div class="input-group input-group-outline mb-3">
+                        <select name="department" id="dept" class="form-control" >
+                        
+                        </select>
+                            <input readonly type="text" class="form-control" name="box_num" value="">
+                         </div> 
+
+                         <div class="input-group input-group-outline mb-3">
+                      <label class="form-label">Vendor</label>
+                    </div>
+
+                    <div class="input-group input-group-outline mb-3">
+                    
+
+
+                    </div>
+   
+                    <div>
+                </div>
+                <div class="modal-footer">
+                    
+                    <button type="submit" class="btn btn-primary" id="formSubmit">Save</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        $(document).ready(function(){
+            $('#formSubmit').click(function(e){
+                e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "{{ url('/books') }}",
+                    method: 'post',
+                    data: {
+                        name: $('#name').val(),
+                        auther_name: $('#auther_name').val(),
+                        description: $('#description').val(),
+                    },
+                    success: function(result){
+                        if(result.errors)
+                        {
+                            $('.alert-danger').html('');
+
+                            $.each(result.errors, function(key, value){
+                                $('.alert-danger').show();
+                                $('.alert-danger').append('<li>'+value+'</li>');
+                            });
+                        }
+                        else
+                        {
+                            $('.alert-danger').hide();
+                            $('#exampleModal').modal('hide');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
   
   <!--   Core JS Files   -->
   

@@ -372,7 +372,7 @@ class admincontroller extends Controller
         $asset->user=$user;
         
         $asset->save();
-        echo "<script>alert('Successfully Added asset');window.location='/addasset?id=$box_num';</script>";
+        echo "<script>alert('Successfully Added asset');window.location='/addasset  ?id=$box_num';</script>";
         
 
     }
@@ -401,6 +401,28 @@ class admincontroller extends Controller
     {
         $location=location::all();
         return view('location',compact('location'));
+    }
+
+
+    public function viewasset(Request $request)
+    {
+        
+        $search_text = $request->get('asset');
+      //  dd($search_text);
+        $asset = ($search_text != null ) ? asset::where('sl_num','LIKE','%'.$search_text.'%')->paginate(10) : asset::paginate(10);
+       // $patient= patient::where('patientname','LIKE','%'.$search_text.'%')->get();
+       // $data=patient::paginate(10);
+        //$patientdob= Carbon::parse('patientdob');
+        //$age = Carbon::parse($patientdob)->diff(Carbon::now())->y;
+        //$age = $patientdob->age;
+
+        return view('viewasset',compact('asset','search_text'));
+    }
+    public function viewassett()
+    {
+        
+        $asset=asset::all();
+        return view('viewasset',compact('asset'));
     }
 
     public function detail()
